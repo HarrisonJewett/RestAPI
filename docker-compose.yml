@@ -1,0 +1,21 @@
+version: '3'
+services:
+
+  postgres:
+    image: postgres:12.7-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+
+  app:
+    build:
+      context: .
+    environment:
+      PGHOST: postgres
+
+volumes:
+  pgdata:
